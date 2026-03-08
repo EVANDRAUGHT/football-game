@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智联矩阵 LinkMatrix - 品牌展示</title>
+    <link rel="icon" href="logo-v2.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0a0a1a 100%);
+            color: #ffffff;
+            padding: 40px 20px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 标题�?*/
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            border-radius: 20px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: rgba(0, 212, 255, 0.8);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        /* Logo展示�?*/
+        .logo-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .showcase-card {
+            background: rgba(26, 26, 46, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .showcase-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 212, 255, 0.1) 50%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .showcase-card:hover::before {
+            left: 100%;
+        }
+
+        .showcase-card:hover {
+            border-color: rgba(0, 212, 255, 0.6);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .showcase-card h3 {
+            color: #00d4ff;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-display {
+            margin: 30px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-size-60 { width: 60px; height: 60px; }
+        .logo-size-100 { width: 100px; height: 100px; }
+        .logo-size-150 { width: 150px; height: 150px; }
+
+        .glow-effect {
+            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.6));
+        }
+
+        /* 设计特点 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(0, 102, 255, 0.05) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h4 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* 配色方案 */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .color-box {
+            height: 120px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .color-box:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .color-label {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .color-code {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* 应用场景 */
+        .application-demo {
+            background: rgba(15, 15, 30, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .demo-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .demo-header img {
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+        }
+
+        .demo-title {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .demo-subtitle {
+            font-size: 0.85rem;
+            color: rgba(0, 212, 255, 0.7);
+            letter-spacing: 2px;
+        }
+
+        /* 创意说明 */
+        .creativity-section {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 102, 255, 0.1) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 60px 0;
+        }
+
+        .creativity-section h2 {
+            color: #00d4ff;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .creativity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .creativity-item {
+            text-align: center;
+        }
+
+        .creativity-item .icon {
+            font-size: 3rem;
+            color: #00d4ff;
+            margin-bottom: 15px;
+        }
+
+        .creativity-item h4 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .creativity-item p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* 按钮 */
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+            color: #0a0a1a;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            margin: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.5);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            text-align: center;
+            margin: 60px 0 40px 0;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            margin: 20px auto 0;
+        }
+
+        /* 响应�?*/
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.2rem; }
+            .hero { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 英雄�?-->
+        <div class="hero">
+            <div class="hero-content">
+                <h1>智联矩阵</h1>
+                <div class="subtitle">LinkMatrix</div>
+                <div class="tagline">AI FOOTBALL INTELLIGENCE PLATFORM</div>
+                <div style="margin-top: 30px;">
+                    <img src="logo-v2.svg" alt="智联矩阵" style="width: 150px; height: 150px; filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.7));">
+                </div>
+            </div>
+        </div>
+
+        <!-- 核心创意 -->
+        <div class="creativity-section">
+            <h2><i class="fas fa-lightbulb"></i> 品牌创意理念</h2>
+            <div class="creativity-grid">
+                <div class="creativity-item">
+                    <div class="icon">🔗</div>
+                    <h4>智联 (Link)</h4>
+                    <p><strong>谐音"智联"</strong> - 智能连接、数据互联、AI联动<br>打通球员、数据、决策的智能链路</p>
+                </div>
+                <div class="creativity-item">
+                    <div class="icon">📊</div>
+                    <h4>矩阵 (Matrix)</h4>
+                    <p><strong>双关含义</strong> - 数据矩阵 + 电影《黑客帝国�?br>多维度分析网络，未来科技�?/p>
+                </div>
+                <div class="creativity-item">
+                    <div class="icon">🚀</div>
+                    <h4>Link + Matrix</h4>
+                    <p><strong>完美融合</strong><br>中英文谐音巧妙结�?br>既有科技感又易于记忆</p>
+                </div>
+                <div class="creativity-item">
+                    <div class="icon">�?/div>
+                    <h4>前瞻创新</h4>
+                    <p><strong>未来视野</strong><br>量子计算、AI智能、大数据<br>代表最前沿的技术趋�?/p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logo尺寸展示 -->
+        <h2 class="section-title">Logo 尺寸与效�?/h2>
+        <div class="logo-showcase">
+            <div class="showcase-card">
+                <h3>标准尺寸 - 60px</h3>
+                <div class="logo-display">
+                    <img src="logo-v2.svg" alt="Logo" class="logo-size-60">
+                </div>
+                <p style="color: rgba(255,255,255,0.6); margin-top: 15px;">
+                    用于导航栏、工具栏等小尺寸场景
+                </p>
+            </div>
+
+            <div class="showcase-card">
+                <h3>中等尺寸 - 100px</h3>
+                <div class="logo-display">
+                    <img src="logo-v2.svg" alt="Logo" class="logo-size-100 glow-effect">
+                </div>
+                <p style="color: rgba(255,255,255,0.6); margin-top: 15px;">
+                    用于页面头部、侧边栏等常规场�?
+                </p>
+            </div>
+
+            <div class="showcase-card">
+                <h3>大尺�?- 150px</h3>
+                <div class="logo-display">
+                    <img src="logo-v2.svg" alt="Logo" class="logo-size-150 glow-effect">
+                </div>
+                <p style="color: rgba(255,255,255,0.6); margin-top: 15px;">
+                    用于品牌展示、宣传页面等大场�?
+                </p>
+            </div>
+        </div>
+
+        <!-- 设计特点 -->
+        <h2 class="section-title">Logo 设计特点</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-cube"></i></div>
+                <h4>3D立方体框�?/h4>
+                <p>采用线框立方体设计，象征多维数据空间和AI神经网络结构，展现立体科技感�?/p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-atom"></i></div>
+                <h4>量子核心</h4>
+                <p>中心发光球体配合4个量子点，模拟量子计算和数据处理的微观世界�?/p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
+                <h4>六边形轨�?/h4>
+                <p>外层六边形旋转轨道，代表数据流动和系统运行，增强未来科技感�?/p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                <h4>数据流粒�?/h4>
+                <p>4条流动的数据粒子轨迹，象征实时分析和智能互联的动态过程�?/p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-sun"></i></div>
+                <h4>霓虹光效</h4>
+                <p>科技蓝霓虹发光效果，强化视觉冲击力，营造赛博朋克未来氛围�?/p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-infinity"></i></div>
+                <h4>无限动画</h4>
+                <p>多层动画循环：旋转、脉冲、流动、呼吸，展现系统的活力与智能�?/p>
+            </div>
+        </div>
+
+        <!-- 配色方案 -->
+        <h2 class="section-title">配色方案</h2>
+        <div class="color-palette">
+            <div class="color-box" style="background: linear-gradient(135deg, #00d4ff 0%, #0099ff 50%, #0066ff 100%);">
+                <div class="color-label">科技蓝渐�?/div>
+                <div class="color-code">#00d4ff �?#0066ff</div>
+            </div>
+
+            <div class="color-box" style="background: linear-gradient(135deg, #00ffff 0%, #00ccff 100%);">
+                <div class="color-label">霓虹青色</div>
+                <div class="color-code">#00ffff �?#00ccff</div>
+            </div>
+
+            <div class="color-box" style="background: linear-gradient(135deg, #e8e8e8 0%, #a0a0a0 100%); color: #333;">
+                <div class="color-label">银灰金属</div>
+                <div class="color-code">#e8e8e8 �?#a0a0a0</div>
+            </div>
+
+            <div class="color-box" style="background: #0a0a1a; border: 2px solid rgba(0, 212, 255, 0.3);">
+                <div class="color-label">深邃背景</div>
+                <div class="color-code">#0a0a1a</div>
+            </div>
+        </div>
+
+        <!-- 应用场景 -->
+        <h2 class="section-title">应用场景展示</h2>
+        
+        <div class="application-demo">
+            <h3 style="color: #00d4ff; margin-bottom: 20px;">网站头部应用</h3>
+            <div class="demo-header">
+                <img src="logo-v2.svg" alt="Logo" style="width: 50px; height: 50px;">
+                <div>
+                    <div class="demo-title">智联矩阵 <span style="font-size: 0.8em; opacity: 0.8;">LinkMatrix</span></div>
+                    <div class="demo-subtitle">AI FOOTBALL INTELLIGENCE PLATFORM</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="application-demo">
+            <h3 style="color: #00d4ff; margin-bottom: 20px;">AI助手侧边栏应�?/h3>
+            <div class="demo-header" style="background: rgba(26, 26, 46, 0.8);">
+                <img src="logo-v2.svg" alt="Logo" style="width: 40px; height: 40px;">
+                <div>
+                    <div class="demo-title" style="font-size: 1.3rem;">智联矩阵</div>
+                    <div class="demo-subtitle">LinkMatrix AI Assistant</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 品牌价�?-->
+        <div class="creativity-section" style="margin-top: 80px;">
+            <h2><i class="fas fa-star"></i> 品牌核心价�?/h2>
+            <div style="text-align: center; max-width: 800px; margin: 30px auto; line-height: 2;">
+                <p style="font-size: 1.2rem; color: rgba(255, 255, 255, 0.8);">
+                    <strong style="color: #00d4ff;">智联矩阵 LinkMatrix</strong> 不仅是一个品牌名称，更是一�?strong>技术理�?/strong>的体现：
+                </p>
+                <p style="margin-top: 20px; font-size: 1.1rem; color: rgba(255, 255, 255, 0.7);">
+                    通过 <strong style="color: #00d4ff;">智能连接 (Link)</strong> 构建 <strong style="color: #00d4ff;">多维数据矩阵 (Matrix)</strong>�?br>
+                    打造前所未有�?<strong style="color: #00d4ff;">AI足球分析生态系�?/strong>�?
+                </p>
+                <div style="margin-top: 40px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; color: #00d4ff; font-weight: bold;">�?/div>
+                        <div style="color: rgba(255, 255, 255, 0.6); margin-top: 10px;">无限可能</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; color: #00d4ff; font-weight: bold;">�?/div>
+                        <div style="color: rgba(255, 255, 255, 0.6); margin-top: 10px;">极速处�?/div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; color: #00d4ff; font-weight: bold;">🧠</div>
+                        <div style="color: rgba(255, 255, 255, 0.6); margin-top: 10px;">智能决策</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; color: #00d4ff; font-weight: bold;">🌐</div>
+                        <div style="color: rgba(255, 255, 255, 0.6); margin-top: 10px;">全球互联</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 行动号召 -->
+        <div style="text-align: center; margin: 80px 0 60px;">
+            <h2 style="color: #00d4ff; font-size: 2rem; margin-bottom: 30px;">
+                体验智联矩阵，开启AI足球分析新纪�?
+            </h2>
+            <a href="index.html" class="btn-primary">
+                <i class="fas fa-rocket"></i> 进入主页
+            </a>
+            <a href="ai-chat.html" class="btn-primary" style="background: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%);">
+                <i class="fas fa-robot"></i> AI智能助手
+            </a>
+        </div>
+
+        <!-- 页脚 -->
+        <div style="text-align: center; padding: 40px 20px; border-top: 1px solid rgba(0, 212, 255, 0.2); color: rgba(255, 255, 255, 0.5);">
+            <p style="font-size: 1.2rem; color: #00d4ff; margin-bottom: 10px;">
+                <strong>智联矩阵 LinkMatrix</strong>
+            </p>
+            <p style="font-size: 0.9rem;">AI Football Intelligence Platform</p>
+            <p style="margin-top: 15px; font-size: 0.85rem;">
+                Powered by Advanced AI & Quantum Computing Technology
+            </p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                © 2026 LinkMatrix. All Rights Reserved.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

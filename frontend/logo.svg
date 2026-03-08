@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- 渐变定义 -->
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc70;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b0b0b0;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- 发光效果 -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- 阴影 -->
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- 背景圆 - 深色 -->
+  <circle cx="100" cy="100" r="95" fill="#0f0f1e" opacity="0.8"/>
+
+  <!-- 外圈轨道 - 科技环 -->
+  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#blueGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="10 5">
+    <animateTransform
+      attributeName="transform"
+      attributeType="XML"
+      type="rotate"
+      from="0 100 100"
+      to="360 100 100"
+      dur="20s"
+      repeatCount="indefinite"/>
+  </circle>
+
+  <!-- 中圈轨道 -->
+  <circle cx="100" cy="100" r="70" fill="none" stroke="url(#greenGradient)" stroke-width="1.5" opacity="0.4" stroke-dasharray="5 3">
+    <animateTransform
+      attributeName="transform"
+      attributeType="XML"
+      type="rotate"
+      from="360 100 100"
+      to="0 100 100"
+      dur="15s"
+      repeatCount="indefinite"/>
+  </circle>
+
+  <!-- 足球主体 - 五边形图案 -->
+  <g filter="url(#shadow)">
+    <!-- 中心五边形 -->
+    <polygon points="100,50 120,70 110,95 90,95 80,70" 
+             fill="url(#greenGradient)" 
+             stroke="#00ff88" 
+             stroke-width="2"
+             filter="url(#glow)"/>
+    
+    <!-- 周围五边形 - 上 -->
+    <polygon points="100,50 85,45 90,30 110,30 115,45" 
+             fill="url(#blueGradient)" 
+             stroke="#00d4ff" 
+             stroke-width="1.5"
+             opacity="0.8"/>
+    
+    <!-- 周围五边形 - 右上 -->
+    <polygon points="120,70 130,65 140,75 135,90 120,85" 
+             fill="url(#blueGradient)" 
+             stroke="#00d4ff" 
+             stroke-width="1.5"
+             opacity="0.8"/>
+    
+    <!-- 周围五边形 - 右下 -->
+    <polygon points="110,95 120,105 115,120 100,125 95,110" 
+             fill="url(#blueGradient)" 
+             stroke="#00d4ff" 
+             stroke-width="1.5"
+             opacity="0.8"/>
+    
+    <!-- 周围五边形 - 左下 -->
+    <polygon points="90,95 95,110 85,120 70,115 75,100" 
+             fill="url(#blueGradient)" 
+             stroke="#00d4ff" 
+             stroke-width="1.5"
+             opacity="0.8"/>
+    
+    <!-- 周围五边形 - 左上 -->
+    <polygon points="80,70 70,75 60,65 65,50 80,55" 
+             fill="url(#blueGradient)" 
+             stroke="#00d4ff" 
+             stroke-width="1.5"
+             opacity="0.8"/>
+  </g>
+
+  <!-- 数据流动效果 - 粒子 -->
+  <g opacity="0.8">
+    <circle cx="100" cy="40" r="2" fill="#00ff88">
+      <animate attributeName="cy" values="40;160;40" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0;1" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="140" cy="60" r="2" fill="#00d4ff">
+      <animate attributeName="cx" values="140;60;140" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0;1" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="60" cy="100" r="2" fill="#00ff88">
+      <animate attributeName="cx" values="60;140;60" dur="3.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0;1" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- AI 标识 - 底部 -->
+  <text x="100" y="170" font-family="'Segoe UI', Arial, sans-serif" font-size="18" font-weight="bold" fill="url(#greenGradient)" text-anchor="middle" filter="url(#glow)">
+    AI
+  </text>
+
+  <!-- 量子光点 - 装饰 -->
+  <circle cx="50" cy="50" r="3" fill="#00d4ff" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="150" cy="150" r="3" fill="#00ff88" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="150" cy="50" r="2" fill="#00d4ff" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="50" cy="150" r="2" fill="#00ff88" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2.2s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- 网格线条 - 科技感 -->
+  <line x1="30" y1="100" x2="170" y2="100" stroke="url(#silverGradient)" stroke-width="0.5" opacity="0.2"/>
+  <line x1="100" y1="30" x2="100" y2="170" stroke="url(#silverGradient)" stroke-width="0.5" opacity="0.2"/>
+</svg>

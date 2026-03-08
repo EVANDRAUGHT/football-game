@@ -1,0 +1,37 @@
+# ============================================
+#  足球分析 AI 系统 - 依赖清单
+# ============================================
+
+# Web 框架
+fastapi==0.104.1
+uvicorn==0.24.0
+python-multipart==0.0.6
+pydantic==2.5.2
+aiofiles==23.2.1
+
+# 视频处理与分析
+opencv-python==4.8.1.78
+numpy==1.24.3
+ultralytics==8.0.206
+imageio-ffmpeg==0.4.9
+pillow==10.1.0
+
+# OCR 识别
+easyocr==1.7.0
+
+# 数据库
+sqlalchemy==2.0.23
+
+# AI 模型服务
+openai>=1.30.0
+
+# 缓存（可选）
+redis==5.0.1
+
+# HTTP 请求库
+# 注意: 如果系统已安装 adbutils 或 uiautomator2，可能会有版本冲突警告
+# 解决方案: 运行 fix_dependencies.bat 自动修复
+requests>=2.28.0
+
+# 异步支持
+httpx>=0.24.0

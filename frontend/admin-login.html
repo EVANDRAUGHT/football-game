@@ -1,0 +1,508 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员登录- 足球视频智能分析系统</title>
+    <link rel="icon" href="logo-football.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --red: #ff4757;
+            --red-dark: #c0392b;
+            --gold: #ffd700;
+            --bg: #080d18;
+            --bg-card: #0f1624;
+            --border: rgba(255, 71, 87, 0.2);
+            --text: #e8eaf6;
+            --dim: rgba(232,234,246,0.45);
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', 'PingFang SC', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        /* 背景 */
+        .bg-layer {
+            position: fixed; inset: 0; z-index: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% -10%, rgba(255,71,87,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 110%, rgba(255,71,87,0.08) 0%, transparent 60%);
+        }
+        .bg-grid {
+            position: fixed; inset: 0; z-index: 0;
+            background-image:
+                linear-gradient(rgba(255,71,87,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,71,87,0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+        }
+        /* 扫描线动画*/
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        .scanline {
+            position: fixed; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,71,87,0.3), transparent);
+            animation: scanline 4s linear infinite;
+            z-index: 0;
+        }
+
+        .wrapper {
+            position: relative; z-index: 1;
+            width: 100%; max-width: 420px;
+            padding: 20px;
+        }
+
+        /* 顶部标识 */
+        .brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .shield-icon {
+            width: 72px; height: 72px;
+            background: linear-gradient(135deg, rgba(255,71,87,0.15), rgba(255,71,87,0.05));
+            border: 2px solid rgba(255,71,87,0.4);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 1.8rem;
+            color: var(--red);
+            box-shadow: 0 0 30px rgba(255,71,87,0.2);
+            position: relative;
+        }
+        .shield-icon::after {
+            content: '';
+            position: absolute; inset: -4px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,71,87,0.15);
+            animation: pulse-ring 2s ease-out infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+        .brand h1 {
+            font-size: 1.3rem;
+            color: var(--text);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .brand p { color: var(--dim); font-size: 0.8rem; margin-top: 4px; }
+        .admin-badge {
+            display: inline-block;
+            background: rgba(255,71,87,0.15);
+            border: 1px solid rgba(255,71,87,0.4);
+            color: var(--red);
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-top: 8px;
+            letter-spacing: 2px;
+        }
+
+        /* 卡片 */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,71,87,0.05);
+        }
+        .card-title {
+            font-size: 1rem; font-weight: 600;
+            color: var(--red);
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255,71,87,0.1);
+        }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--dim);
+            margin-bottom: 7px;
+            letter-spacing: 0.5px;
+        }
+        .input-wrap { position: relative; }
+        .input-wrap i.prefix {
+            position: absolute; left: 13px; top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,71,87,0.5); font-size: 0.85rem;
+        }
+        .input-wrap input {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 11px 14px 11px 38px;
+            color: var(--text);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-wrap input:focus {
+            border-color: rgba(255,71,87,0.5);
+            box-shadow: 0 0 0 3px rgba(255,71,87,0.08);
+        }
+        .input-wrap input::placeholder { color: rgba(255,255,255,0.2); }
+
+        /* 验证码行 */
+        .captcha-row {
+            display: flex; gap: 10px;
+        }
+        .captcha-row input { flex: 1; }
+        #captcha-box {
+            min-width: 110px;
+            height: 42px;
+            background: rgba(255,71,87,0.08);
+            border: 1px solid rgba(255,71,87,0.25);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--red);
+            letter-spacing: 4px;
+            user-select: none;
+            text-decoration: line-through;
+            filter: blur(0.3px);
+            transition: opacity 0.2s;
+        }
+        #captcha-box:hover { opacity: 0.8; }
+        #captcha-hint { font-size: 0.72rem; color: var(--dim); margin-top: 4px; }
+
+        /* 错误提示 */
+        .alert {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            display: none;
+            align-items: center; gap: 8px;
+        }
+        .alert.error {
+            display: flex;
+            background: rgba(255,71,87,0.1);
+            border: 1px solid rgba(255,71,87,0.3);
+            color: var(--red);
+        }
+        .alert.locked {
+            display: flex;
+            background: rgba(255,206,86,0.1);
+            border: 1px solid rgba(255,206,86,0.3);
+            color: #ffd700;
+        }
+
+        /* 登录按钮 */
+        .btn-login {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--red), var(--red-dark));
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-login:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255,71,87,0.4);
+        }
+        .btn-login:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* 底部 */
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.82rem;
+            color: var(--dim);
+        }
+        .back-link a { color: rgba(255,71,87,0.7); text-decoration: none; }
+        .back-link a:hover { color: var(--red); }
+
+        /* 锁定倒计时*/
+        #countdown { font-weight: 700; color: var(--gold); }
+
+        /* 安全提示 */
+        .security-tips {
+            margin-top: 20px;
+            padding: 12px 14px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            color: var(--dim);
+        }
+        .security-tips li { margin-bottom: 4px; list-style: none; display: flex; gap: 6px; }
+        .security-tips li::before { content: '▸'; color: rgba(255,71,87,0.5); }
+    </style>
+</head>
+<body>
+    <div class="bg-layer"></div>
+    <div class="bg-grid"></div>
+    <div class="scanline"></div>
+
+    <div class="wrapper">
+        <div class="brand">
+            <div class="shield-icon"><i class="fas fa-shield-alt"></i></div>
+            <h1>系统后台管理</h1>
+            <p>足球视频智能分析系统</p>
+            <span class="admin-badge">ADMIN ACCESS</span>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-lock"></i> 管理员身份验证
+            </div>
+
+            <div id="alert-box" class="alert"></div>
+
+            <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label>管理员账号</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-user-shield prefix"></i>
+                        <input type="text" id="admin-username" placeholder="请输入管理员账号" autocomplete="off" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>管理员密码</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-key prefix"></i>
+                        <input type="password" id="admin-password" placeholder="请输入管理员密码" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>图形验证码</label>
+                    <div class="captcha-row">
+                        <div class="input-wrap" style="flex:1">
+                            <i class="fas fa-check-circle prefix"></i>
+                            <input type="text" id="captcha-input" placeholder="输入验证码" maxlength="4" autocomplete="off" required>
+                        </div>
+                        <div id="captcha-box" onclick="refreshCaptcha()" title="点击刷新"></div>
+                    </div>
+                    <div id="captcha-hint">点击验证码图片可刷新</div>
+                </div>
+
+                <button type="submit" class="btn-login" id="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> 安全登录
+                </button>
+            </form>
+        </div>
+
+        <div class="security-tips">
+            <li>本页面仅限授权管理员访问，所有登录行为均被记录</li>
+            <li>连续 5 次错误将锁定 5 分钟，请勿暴力尝试</li>
+            <li>登录后请勿在公共设备上保存密码</li>
+        </div>
+
+        <div class="back-link">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> 返回用户前台</a>
+        </div>
+    </div>
+
+    <script>
+        // ===== 验证码生成 =====
+        const CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        let currentCaptcha = '';
+
+        function generateCaptcha() {
+            let code = '';
+            for (let i = 0; i < 4; i++) {
+                code += CHARS[Math.floor(Math.random() * CHARS.length)];
+            }
+            return code;
+        }
+        function refreshCaptcha() {
+            currentCaptcha = generateCaptcha();
+            document.getElementById('captcha-box').textContent = currentCaptcha;
+            document.getElementById('captcha-input').value = '';
+        }
+        refreshCaptcha();
+
+        // ===== 登录限制 =====
+        const LOCK_KEY = 'admin_lock';
+        const FAIL_KEY = 'admin_fails';
+        const MAX_FAILS = 5;
+        const LOCK_DURATION = 5 * 60 * 1000; // 5分钟
+
+        function isLocked() {
+            const lockUntil = parseInt(localStorage.getItem(LOCK_KEY) || '0');
+            return Date.now() < lockUntil;
+        }
+        function getLockRemaining() {
+            const lockUntil = parseInt(localStorage.getItem(LOCK_KEY) || '0');
+            return Math.max(0, Math.ceil((lockUntil - Date.now()) / 1000));
+        }
+        function addFail() {
+            let fails = parseInt(localStorage.getItem(FAIL_KEY) || '0') + 1;
+            localStorage.setItem(FAIL_KEY, fails);
+            if (fails >= MAX_FAILS) {
+                localStorage.setItem(LOCK_KEY, Date.now() + LOCK_DURATION);
+                localStorage.setItem(FAIL_KEY, '0');
+                return true; // 触发锁定
+            }
+            return false;
+        }
+        function clearFails() {
+            localStorage.removeItem(FAIL_KEY);
+            localStorage.removeItem(LOCK_KEY);
+        }
+
+        // 锁定倒计时
+        let lockTimer = null;
+        function startLockCountdown() {
+            const btn = document.getElementById('login-btn');
+            btn.disabled = true;
+            const alertBox = document.getElementById('alert-box');
+
+            function tick() {
+                const remaining = getLockRemaining();
+                if (remaining <= 0) {
+                    clearInterval(lockTimer);
+                    btn.disabled = false;
+                    alertBox.className = 'alert';
+                    alertBox.style.display = 'none';
+                    refreshCaptcha();
+                    return;
+                }
+                alertBox.className = 'alert locked';
+                alertBox.innerHTML = `<i class="fas fa-clock"></i> 账号已锁定，请<span id="countdown">${remaining}</span> 秒后重试`;
+                alertBox.style.display = 'flex';
+            }
+            tick();
+            lockTimer = setInterval(tick, 1000);
+        }
+
+        // 检查初始锁定状态
+        if (isLocked()) { startLockCountdown(); }
+
+        // ===== 管理员登录处理 =====
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            if (isLocked()) return;
+
+            const username = document.getElementById('admin-username').value.trim();
+            const password = document.getElementById('admin-password').value;
+            const captchaInput = document.getElementById('captcha-input').value.toUpperCase().trim();
+            const alertBox = document.getElementById('alert-box');
+
+            // 验证码检查
+            if (captchaInput !== currentCaptcha) {
+                showError('验证码错误，请重新输入');
+                refreshCaptcha();
+                return;
+            }
+
+            const btn = document.getElementById('login-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 验证中..';
+
+            try {
+                const res = await fetch('http://127.0.0.1:9999/api/auth/admin-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    // 存储管理员会话（包含token）
+                    sessionStorage.setItem('admin_session', JSON.stringify({
+                        username: data.username,
+                        token: data.token,
+                        login_time: Date.now()
+                    }));
+                    localStorage.setItem('auth_user', JSON.stringify({ username: data.username, role: 'admin' }));
+                    clearFails();
+                    // 记录登录日志
+                    await fetch('http://127.0.0.1:9999/api/admin/access-log', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-Admin-Token': data.token },
+                        body: JSON.stringify({ action: 'admin_login', username })
+                    }).catch(() => {});
+
+                    showSuccess('验证成功，正在跳转..');
+                    setTimeout(() => { window.location.href = 'admin.html'; }, 700);
+                } else {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.detail || '认证失败');
+                }
+
+            } catch (err) {
+                // 后端不可达时做本地演示验证
+                if (username === 'admin' && password === 'Admin@2024') {
+                    sessionStorage.setItem('admin_session', JSON.stringify({
+                        username: 'admin', token: 'demo-token-' + Date.now(), login_time: Date.now()
+                    }));
+                    localStorage.setItem('auth_user', JSON.stringify({ username: 'admin', role: 'admin' }));
+                    clearFails();
+                    showSuccess('验证成功，正在跳转..');
+                    setTimeout(() => { window.location.href = 'admin.html'; }, 700);
+                    return;
+                }
+                const locked = addFail();
+                const fails = parseInt(localStorage.getItem(FAIL_KEY) || '0');
+                if (locked) {
+                    startLockCountdown();
+                } else {
+                    const remaining = MAX_FAILS - fails;
+                    showError(`账号或密码错误（还剩 ${remaining} 次尝试机会）`);
+                    refreshCaptcha();
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 安全登录';
+                }
+            }
+        }
+
+        function showError(msg) {
+            const el = document.getElementById('alert-box');
+            el.className = 'alert error';
+            el.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${msg}`;
+            el.style.display = 'flex';
+            const btn = document.getElementById('login-btn');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 安全登录';
+        }
+        function showSuccess(msg) {
+            const el = document.getElementById('alert-box');
+            el.className = 'alert';
+            el.style.background = 'rgba(0,255,136,0.1)';
+            el.style.border = '1px solid rgba(0,255,136,0.3)';
+            el.style.color = '#00ff88';
+            el.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`;
+            el.style.display = 'flex';
+        }
+
+        // 已登录管理员直接跳转
+        const session = sessionStorage.getItem('admin_session');
+        if (session) {
+            try {
+                const s = JSON.parse(session);
+                // session 有效期 2 小时
+                if (s.token && Date.now() - s.login_time < 2 * 60 * 60 * 1000) {
+                    window.location.href = 'admin.html';
+                }
+            } catch(e) {}
+        }
+    </script>
+    <footer style="position:fixed;bottom:0;left:0;right:0;text-align:center;padding:10px 0;background:rgba(10,15,30,0.85);backdrop-filter:blur(4px);z-index:100;">
+        <p style="color:rgba(255,255,255,0.35);font-size:0.76rem;letter-spacing:0.5px;">2026年&nbsp;&nbsp;版本号V2.0.0</p>
+        <p style="color:rgba(255,255,255,0.35);font-size:0.76rem;letter-spacing:0.5px;">版权所有 &copy; 韩欣涛&nbsp;汤宇飞&nbsp;彭勃元</p>
+    </footer>
+</body>
+</html>

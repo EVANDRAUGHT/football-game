@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- 科技蓝渐变 -->
+    <linearGradient id="techBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 霓虹青色渐变 -->
+    <linearGradient id="neonCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ccff;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 银灰渐变 -->
+    <linearGradient id="silverGray" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8e8e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a0a0a0;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- 霓虹紫渐变 -->
+    <linearGradient id="neonPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff00ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#cc00ff;stop-opacity:0.8" />
+    </linearGradient>
+
+    <!-- 强发光效果 -->
+    <filter id="strongGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- 霓虹光效 -->
+    <filter id="neonGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feFlood flood-color="#00d4ff" flood-opacity="0.8"/>
+      <feComposite in2="coloredBlur" operator="in" result="glowColor"/>
+      <feMerge>
+        <feMergeNode in="glowColor"/>
+        <feMergeNode in="glowColor"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- 阴影 -->
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- 背景深色圆 -->
+  <circle cx="100" cy="100" r="96" fill="#0a0a1a" opacity="0.9"/>
+
+  <!-- 外层科技环 - 六边形轨道 -->
+  <g opacity="0.7">
+    <polygon points="100,20 145,40 145,80 100,100 55,80 55,40" 
+             fill="none" 
+             stroke="url(#techBlue)" 
+             stroke-width="2" 
+             stroke-dasharray="8 4"
+             filter="url(#neonGlow)">
+      <animateTransform
+        attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        from="0 100 100"
+        to="360 100 100"
+        dur="25s"
+        repeatCount="indefinite"/>
+    </polygon>
+  </g>
+
+  <!-- 中层能量环 -->
+  <g opacity="0.5">
+    <circle cx="100" cy="100" r="70" 
+            fill="none" 
+            stroke="url(#neonCyan)" 
+            stroke-width="1.5" 
+            stroke-dasharray="5 3">
+      <animateTransform
+        attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        from="360 100 100"
+        to="0 100 100"
+        dur="18s"
+        repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- 核心量子点矩阵 (Link + 矩阵概念) -->
+  <g filter="url(#strongGlow)">
+    <!-- 中心立方体框架 -->
+    <g stroke="url(#techBlue)" stroke-width="3" fill="none" stroke-linecap="round">
+      <!-- 前面 -->
+      <rect x="70" y="70" width="60" height="60" rx="5"/>
+      <!-- 连接线 - 形成3D效果 -->
+      <line x1="70" y1="70" x2="80" y2="60"/>
+      <line x1="130" y1="70" x2="140" y2="60"/>
+      <line x1="70" y1="130" x2="80" y2="140"/>
+      <line x1="130" y1="130" x2="140" y2="140"/>
+      <!-- 后面 -->
+      <rect x="80" y="60" width="60" height="60" rx="5" stroke-opacity="0.5"/>
+    </g>
+
+    <!-- 核心发光球 -->
+    <circle cx="100" cy="100" r="15" fill="url(#neonCyan)" opacity="0.8">
+      <animate attributeName="r" values="15;18;15" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- 内部小量子点 -->
+    <circle cx="85" cy="85" r="4" fill="#00ffff" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.4;0.9" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="115" cy="85" r="4" fill="#00ffff" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.4;0.9" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="85" cy="115" r="4" fill="#00ffff" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.4;0.9" dur="2.1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="115" cy="115" r="4" fill="#00ffff" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.4;0.9" dur="1.7s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- 数据流粒子 -->
+  <g opacity="0.8">
+    <!-- 粒子1 -->
+    <circle cx="50" cy="100" r="2.5" fill="#00d4ff">
+      <animate attributeName="cx" values="50;150;50" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="50" r="2.5" fill="#00ffff">
+      <animate attributeName="cy" values="50;150;50" dur="3.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="150" cy="100" r="2.5" fill="#0099ff">
+      <animate attributeName="cx" values="150;50;150" dur="4.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="4.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="150" r="2.5" fill="#00ccff">
+      <animate attributeName="cy" values="150;50;150" dur="3.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="3.8s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- 角落装饰性量子点 -->
+  <g opacity="0.6">
+    <circle cx="30" cy="30" r="3" fill="#00d4ff">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="170" cy="30" r="3" fill="#00ffff">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="30" cy="170" r="3" fill="#0099ff">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="1.9s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="170" cy="170" r="3" fill="#00ccff">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="2.3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- 连接线网格 -->
+  <g stroke="url(#silverGray)" stroke-width="0.5" opacity="0.2">
+    <line x1="30" y1="100" x2="70" y2="100"/>
+    <line x1="130" y1="100" x2="170" y2="100"/>
+    <line x1="100" y1="30" x2="100" y2="70"/>
+    <line x1="100" y1="130" x2="100" y2="170"/>
+  </g>
+
+  <!-- 底部文字标识 -->
+  <text x="100" y="175" 
+        font-family="'Arial', 'Microsoft YaHei', sans-serif" 
+        font-size="14" 
+        font-weight="bold" 
+        fill="url(#techBlue)" 
+        text-anchor="middle"
+        filter="url(#neonGlow)">
+    LINK·AI
+  </text>
+
+  <!-- 脉冲扫描线效果 -->
+  <g opacity="0.3">
+    <line x1="50" y1="100" x2="150" y2="100" stroke="url(#neonCyan)" stroke-width="2">
+      <animate attributeName="opacity" values="0;0.8;0" dur="3s" repeatCount="indefinite"/>
+      <animateTransform
+        attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        from="0 100 100"
+        to="360 100 100"
+        dur="6s"
+        repeatCount="indefinite"/>
+    </line>
+  </g>
+</svg>
