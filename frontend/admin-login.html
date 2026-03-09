@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理员登录- 足球视频智能分析系统</title>
+    <title>管理员登录 - 足球智能视频分析系统</title>
     <link rel="icon" href="logo-football.svg" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <style>
@@ -42,7 +42,7 @@
                 linear-gradient(90deg, rgba(255,71,87,0.04) 1px, transparent 1px);
             background-size: 48px 48px;
         }
-        /* 扫描线动画*/
+        /* 扫描线动画 */
         @keyframes scanline {
             0% { transform: translateY(-100%); }
             100% { transform: translateY(100vh); }
@@ -234,7 +234,7 @@
         .back-link a { color: rgba(255,71,87,0.7); text-decoration: none; }
         .back-link a:hover { color: var(--red); }
 
-        /* 锁定倒计时*/
+        /* 锁定倒计时 */
         #countdown { font-weight: 700; color: var(--gold); }
 
         /* 安全提示 */
@@ -248,7 +248,7 @@
             color: var(--dim);
         }
         .security-tips li { margin-bottom: 4px; list-style: none; display: flex; gap: 6px; }
-        .security-tips li::before { content: '▸'; color: rgba(255,71,87,0.5); }
+        .security-tips li::before { content: '•'; color: rgba(255,71,87,0.5); }
     </style>
 </head>
 <body>
@@ -260,7 +260,7 @@
         <div class="brand">
             <div class="shield-icon"><i class="fas fa-shield-alt"></i></div>
             <h1>系统后台管理</h1>
-            <p>足球视频智能分析系统</p>
+            <p>足球智能视频分析系统</p>
             <span class="admin-badge">ADMIN ACCESS</span>
         </div>
 
@@ -381,7 +381,7 @@
                     return;
                 }
                 alertBox.className = 'alert locked';
-                alertBox.innerHTML = `<i class="fas fa-clock"></i> 账号已锁定，请<span id="countdown">${remaining}</span> 秒后重试`;
+                alertBox.innerHTML = `<i class="fas fa-clock"></i> 账号已锁定，请 <span id="countdown">${remaining}</span> 秒后重试`;
                 alertBox.style.display = 'flex';
             }
             tick();
@@ -410,7 +410,7 @@
 
             const btn = document.getElementById('login-btn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 验证中..';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 验证中...';
 
             try {
                 const res = await fetch('http://127.0.0.1:9999/api/auth/admin-login', {
@@ -436,7 +436,7 @@
                         body: JSON.stringify({ action: 'admin_login', username })
                     }).catch(() => {});
 
-                    showSuccess('验证成功，正在跳转..');
+                    showSuccess('验证成功，正在跳转...');
                     setTimeout(() => { window.location.href = 'admin.html'; }, 700);
                 } else {
                     const err = await res.json().catch(() => ({}));
@@ -451,7 +451,7 @@
                     }));
                     localStorage.setItem('auth_user', JSON.stringify({ username: 'admin', role: 'admin' }));
                     clearFails();
-                    showSuccess('验证成功，正在跳转..');
+                    showSuccess('验证成功，正在跳转...');
                     setTimeout(() => { window.location.href = 'admin.html'; }, 700);
                     return;
                 }
@@ -500,9 +500,5 @@
             } catch(e) {}
         }
     </script>
-    <footer style="position:fixed;bottom:0;left:0;right:0;text-align:center;padding:10px 0;background:rgba(10,15,30,0.85);backdrop-filter:blur(4px);z-index:100;">
-        <p style="color:rgba(255,255,255,0.35);font-size:0.76rem;letter-spacing:0.5px;">2026年&nbsp;&nbsp;版本号V2.0.0</p>
-        <p style="color:rgba(255,255,255,0.35);font-size:0.76rem;letter-spacing:0.5px;">版权所有 &copy; 韩欣涛&nbsp;汤宇飞&nbsp;彭勃元</p>
-    </footer>
 </body>
 </html>

@@ -1,7 +1,7 @@
 :root {
     --primary: #00ff88;
     --primary-glow: rgba(0, 255, 136, 0.3);
-    --bg-dark: #040b18;
+    --bg-dark: #0a0e14;
     --card-bg: rgba(255, 255, 255, 0.05);
     --text-main: #e0e0e0;
     --text-dim: #a0a0a0;
@@ -16,19 +16,33 @@
 }
 
 body {
-    background-color: #040b18;
+    background-color: var(--bg-dark);
     color: var(--text-main);
     overflow-x: hidden;
     min-height: 100vh;
-    position: relative;
 }
 
-/* 旧 .container 保留兼容 */
 .container {
-    position: relative;
-    z-index: 1;
-    max-width: 100%;
-    padding: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+header h1 {
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
 }
 
 .main-grid {
@@ -114,17 +128,12 @@ body {
 }
 
 .status-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: bold;
-    line-height: 1;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
     background: rgba(0, 255, 136, 0.1);
     color: var(--primary);
     border: 1px solid var(--primary);
-    white-space: nowrap;
 }
 
 button {

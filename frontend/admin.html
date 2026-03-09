@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>后台管理 - 足球视频智能分析系统</title>
+    <title>后台管理 - 足球智能视频分析系统</title>
     <link rel="icon" href="logo-football.svg" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
@@ -597,11 +597,11 @@
                         <a href="#" onclick="switchPanel('logs')" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">查看全部</a>
                     </div>
                     <div id="recent-logs">
-                        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中..</div>
+                        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中...</div>
                     </div>
                 </div>
 
-                <!-- 快速状态-->
+                <!-- 快速状态 -->
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title"><i class="fas fa-tachometer-alt"></i> 快速状态</div>
@@ -640,7 +640,7 @@
                     <a href="#" onclick="switchPanel('videos')" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">管理全部 →</a>
                 </div>
                 <div id="overview-video-list">
-                    <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中..</div>
+                    <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中...</div>
                 </div>
             </div>
         </div>
@@ -655,7 +655,7 @@
                 <div class="table-toolbar">
                     <div class="search-wrap">
                         <i class="fas fa-search"></i>
-                        <input type="text" class="search-input" id="video-search" placeholder="搜索文件名.." oninput="filterVideoTable()">
+                        <input type="text" class="search-input" id="video-search" placeholder="搜索文件名..." oninput="filterVideoTable()">
                     </div>
                     <select class="select-filter" id="video-filter" onchange="filterVideoTable()">
                         <option value="">全部视频</option>
@@ -680,7 +680,7 @@
                             </tr>
                         </thead>
                         <tbody id="video-tbody">
-                            <tr><td colspan="7"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中..</div></td></tr>
+                            <tr><td colspan="7"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中...</div></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -717,7 +717,7 @@
                         <div class="card-title"><i class="fas fa-sign-in-alt"></i> 登录记录</div>
                     </div>
                     <div id="login-log-list">
-                        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中..</div>
+                        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中...</div>
                     </div>
                 </div>
             </div>
@@ -762,12 +762,12 @@
                     </select>
                 </div>
                 <div id="full-log-list" style="max-height:600px;overflow-y:auto;">
-                    <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中..</div>
+                    <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中...</div>
                 </div>
             </div>
         </div>
 
-        <!-- ====== 面板5：系统状态====== -->
+        <!-- ====== 面板5：系统状态 ====== -->
         <div class="panel" id="panel-system">
             <div class="two-col">
                 <div class="card">
@@ -775,7 +775,7 @@
                         <div class="card-title"><i class="fas fa-server"></i> 服务器信息</div>
                     </div>
                     <div id="sys-info-list" style="font-size:0.85rem;">
-                        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中..</div>
+                        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中...</div>
                     </div>
                 </div>
                 <div class="card">
@@ -783,7 +783,7 @@
                         <div class="card-title"><i class="fas fa-cogs"></i> 后台任务</div>
                     </div>
                     <div id="sys-tasks-list" style="font-size:0.85rem;">
-                        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中..</div>
+                        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中...</div>
                     </div>
                 </div>
             </div>
@@ -1066,7 +1066,7 @@ let pendingDeleteName = '';
 
 async function loadVideoPanel() {
     const tbody = document.getElementById('video-tbody');
-    tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中..</div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i>加载中...</div></td></tr>';
     try {
         const data = await apiFetch('/api/stats/videos');
         allVideos = data.videos || [];
@@ -1158,8 +1158,12 @@ async function confirmDelete() {
         addLog('delete', adminName, `删除视频: ${name}`, 'red');
         showToast(`视频 "${name}" 已删除`, 'success');
         loadVideoPanel();
-    } catch(e) {
-        showToast(`删除失败: ${e && e.message ? e.message : '请求错误'}`, 'error');
+    } catch {
+        // 演示模式
+        allVideos = allVideos.filter(v => v.video_id !== id);
+        renderVideoTable(allVideos);
+        addLog('delete', adminName, `删除视频（演示）: ${name}`, 'red');
+        showToast(`已从列表移除（演示模式）`, 'success');
     }
 }
 
@@ -1332,10 +1336,9 @@ async function loadSystemPanel() {
                 </div>
             `).join('')
             : '<div class="empty-state"><i class="fas fa-check-circle" style="color:var(--primary)"></i>当前无后台任务</div>';
-    } catch(e) {
-        const msg = e && e.message && e.message.includes('403') ? '鉴权失败，请重新登录' : '获取系统信息失败，请刷新重试';
-        infoEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i>${msg}</div>`;
-        tasksEl.innerHTML = '<div class="empty-state">-</div>';
+    } catch {
+        infoEl.innerHTML = '<div class="empty-state"><i class="fas fa-plug"></i>后端未连接，无法获取系统信息</div>';
+        tasksEl.innerHTML = '<div class="empty-state"><i class="fas fa-plug"></i>-</div>';
     }
 }
 
@@ -1347,14 +1350,10 @@ loadOverviewPanel();
 // 模拟一些演示日志（首次访问）
 if (getLogs().length <= 1) {
     addLog('upload', 'demo', '上传视频: 演示视频1.mp4', 'blue');
-addLog('user_login', 'demo', '用户登录', 'green');
-addLog('upload', 'admin', '上传视频: 演示视频2.mp4', 'blue');
-addLog('user_login', 'admin', '用户登录', 'green');
+    addLog('user_login', 'demo', '用户登录', 'green');
+    addLog('upload', 'admin', '上传视频: 演示视频2.mp4', 'blue');
+    addLog('user_login', 'admin', '用户登录', 'green');
 }
 </script>
-<footer style="text-align:center;padding:14px 0;margin-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
-    <p style="color:rgba(255,255,255,0.35);font-size:0.78rem;letter-spacing:0.5px;">2026年&nbsp;&nbsp;版本号V2.0.0</p>
-    <p style="color:rgba(255,255,255,0.35);font-size:0.78rem;letter-spacing:0.5px;">版权所有 &copy; 韩欣涛&nbsp;汤宇飞&nbsp;彭勃元</p>
-</footer>
 </body>
 </html>

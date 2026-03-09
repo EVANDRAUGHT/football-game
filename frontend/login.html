@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录 - 足球视频智能分析系统</title>
+    <title>登录 - 足球智能视频分析系统</title>
     <link rel="icon" href="logo-football.svg" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <style>
@@ -12,7 +12,7 @@
             --primary: #00ff88;
             --primary-dark: #00cc70;
             --accent: #00d4ff;
-            --bg-dark: #071020;
+            --bg-dark: #0a0f1e;
             --bg-card: #111827;
             --bg-border: rgba(0,255,136,0.15);
             --text-primary: #e8eaf6;
@@ -254,8 +254,8 @@
 
     <div class="login-wrapper">
         <div class="brand">
-            <img src="logo-football.svg" alt="足球视频智能分析系统">
-            <h1>足球视频智能分析系统</h1>
+            <img src="logo-football.svg" alt="足球智能视频分析系统">
+            <h1>足球智能视频分析系统</h1>
             <p>AI驱动 · 智能识别 · 精准分析</p>
         </div>
 
@@ -423,7 +423,7 @@
             if (/[0-9]/.test(v)) score++;
             if (/[^a-zA-Z0-9]/.test(v)) score++;
             const colors = ['#ff4c4c','#ff9f43','#ffce56','#00d4ff','#00ff88'];
-            const labels = ['非常弱', '弱', '一般', '强', '非常强'];
+            const labels = ['非常弱','弱','一般','强','非常强'];
             const fill = document.getElementById('pwd-strength-fill');
             fill.style.width = (score * 20) + '%';
             fill.style.background = colors[score - 1] || colors[0];
@@ -452,7 +452,7 @@
 
             // 演示模式：固定账号直接通过
             if ((username === 'admin' || username === 'demo') && password === '123456') {
-                showAlert('登录成功，正在跳转..', 'success');
+                showAlert('登录成功，正在跳转...', 'success');
                 localStorage.setItem('auth_user', JSON.stringify({ username, role: username === 'admin' ? 'admin' : 'user' }));
                 setTimeout(() => { window.location.href = 'index.html'; }, 800);
                 return;
@@ -467,7 +467,7 @@
                 if (res.ok) {
                     const data = await res.json();
                     localStorage.setItem('auth_user', JSON.stringify(data));
-                    showAlert('登录成功，正在跳转..', 'success');
+                    showAlert('登录成功，正在跳转...', 'success');
                     setTimeout(() => { window.location.href = 'index.html'; }, 800);
                 } else {
                     const err = await res.json().catch(() => ({}));
@@ -505,7 +505,7 @@
             const password = pwdEl.value;
 
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 注册中..';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 注册中...';
             hideAlert();
 
             try {
@@ -517,7 +517,7 @@
                 const data = await res.json().catch(() => ({}));
 
                 if (res.ok) {
-                    showAlert('注册成功！即将跳转到登录页..', 'success');
+                    showAlert('注册成功！即将跳转到登录页...', 'success');
                     // 预填用户名
                     document.getElementById('login-username').value = username;
                     setTimeout(() => switchTab('login'), 1500);
@@ -552,9 +552,5 @@
             window.location.href = 'index.html';
         }
     </script>
-    <footer style="position:fixed;bottom:0;left:0;right:0;text-align:center;padding:10px 0;background:rgba(10,15,30,0.85);backdrop-filter:blur(4px);z-index:100;">
-        <p style="color:rgba(255,255,255,0.35);font-size:0.76rem;letter-spacing:0.5px;">2026年&nbsp;&nbsp;版本号V2.0.0</p>
-        <p style="color:rgba(255,255,255,0.35);font-size:0.76rem;letter-spacing:0.5px;">版权所有 &copy; 韩欣涛&nbsp;汤宇飞&nbsp;彭勃元</p>
-    </footer>
 </body>
 </html>
