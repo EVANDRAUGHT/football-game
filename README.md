@@ -50,3 +50,9 @@ flowchart LR
 5. 打开 `http://127.0.0.1:9999`，注册账号或选择游客体验。
 
 系统面向本地运行。SQLite 数据库、上传的视频和分析缓存默认保存在 `GoalScope_data/` 下。
+
+## 项目成员
+
+- [EVANDRAUGHT](https://github.com/EVANDRAUGHT)
+- [Sakiel2025](https://github.com/Sakiel2025)
+- [JZCJ](https://github.com/JZCJ)
