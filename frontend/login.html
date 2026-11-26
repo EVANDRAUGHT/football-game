@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -13,102 +13,217 @@
             --primary-dark: #00cc70;
             --accent: #00d4ff;
             --bg-dark: #071020;
-            --bg-card: #111827;
-            --bg-border: rgba(0,255,136,0.15);
+            --bg-card: rgba(17,24,39,0.92);
+            --bg-border: rgba(0,255,136,0.18);
             --text-primary: #e8eaf6;
             --text-dim: rgba(232,234,246,0.5);
         }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             background: var(--bg-dark);
             color: var(--text-primary);
-            font-family: 'Segoe UI', 'PingFang SC', sans-serif;
-            min-height: 100vh;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        /* ── 自定义滚动条 ── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.25); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0,255,136,0.45); }
+        * { scrollbar-width: thin; scrollbar-color: rgba(0,255,136,0.25) transparent; }
+
+        /* ═══════════════════════════════════════
+           主体 - 左图右卡分屏
+        ═══════════════════════════════════════ */
+        .page-body {
             display: flex;
-            align-items: flex-start;
+            height: 100vh;
+        }
+
+        /* ── 左侧图片区域 ── */
+        .hero-side {
+            flex: 1 1 55%;
+            position: relative;
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        /* 足球场地科技感背景 */
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 30% 60%, rgba(0,80,40,0.55) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(0,40,80,0.45) 0%, transparent 55%),
+                linear-gradient(160deg, #061a10 0%, #071020 50%, #040d1a 100%);
+        }
+
+        /* 科技感粒子网格覆盖 */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg, rgba(7,16,32,0.55) 0%, rgba(0,40,20,0.25) 50%, rgba(7,16,32,0.75) 100%),
+                linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px);
+            background-size: auto, 36px 36px, 36px 36px;
+        }
+
+        /* 右侧渐变遮罩，使卡片区域无缝衔接 */
+        .hero-fade {
+            position: absolute;
+            top: 0; bottom: 0; right: 0;
+            width: 120px;
+            background: linear-gradient(to right, transparent, var(--bg-dark));
+        }
+
+        /* 左侧文字 */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 60px 60px 40px 56px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 20px 0;
         }
 
-        /* 自定义滚动条 —— 符合整体深色绿色风格 */
-        ::-webkit-scrollbar {
-            width: 6px;
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,255,136,0.12);
+            border: 1px solid rgba(0,255,136,0.30);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 0.78rem;
+            color: var(--primary);
+            letter-spacing: 1px;
+            margin-bottom: 28px;
+            width: fit-content;
         }
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.03);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(0, 255, 136, 0.25);
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 255, 136, 0.45);
-        }
-        /* Firefox 滚动条 */
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(0, 255, 136, 0.25) rgba(255, 255, 255, 0.03);
-        }
-        /* 背景动态粒子 */
-        .bg-grid {
-            position: fixed; inset: 0; z-index: 0;
-            background-image:
-                linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-        .bg-glow {
-            position: fixed;
-            width: 600px; height: 600px;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.15;
-            z-index: 0;
-        }
-        .glow-1 { background: #00ff88; top: -200px; left: -200px; }
-        .glow-2 { background: #00d4ff; bottom: -200px; right: -200px; }
+        .hero-label span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); animation: pulse-dot 1.5s infinite; }
 
-        .login-wrapper {
-            position: relative; z-index: 1;
-            width: 100%; max-width: 440px;
-            padding: 20px;
-            margin: auto;
-            align-self: center;
+        @keyframes pulse-dot {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
         }
-        .brand {
-            text-align: center;
-            margin-bottom: 32px;
+
+        .hero-title {
+            font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            color: #fff;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+            margin-bottom: 14px;
         }
-        .brand img { width: 64px; height: 64px; filter: drop-shadow(0 0 16px rgba(0,255,136,0.6)); }
-        .brand h1 {
-            margin-top: 16px;
-            font-size: 1.5rem;
-            background: linear-gradient(135deg, #00ff88, #00cc70);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        .hero-title em {
+            font-style: normal;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .brand p { color: var(--text-dim); font-size: 0.85rem; margin-top: 6px; letter-spacing: 1px; }
+
+        .hero-sub {
+            font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+            color: rgba(232,234,246,0.65);
+            line-height: 1.7;
+            max-width: 480px;
+            margin-bottom: 40px;
+        }
+
+        /* 统计数字 */
+        .hero-stats {
+            display: flex;
+            gap: 36px;
+        }
+        .stat-item { text-align: center; }
+        .stat-num {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* 光晕装饰 */
+        .hero-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .hg1 { width: 400px; height: 400px; background: rgba(0,255,136,0.12); bottom: -100px; left: -100px; }
+        .hg2 { width: 300px; height: 300px; background: rgba(0,212,255,0.10); top: 50px; right: 80px; }
+
+        /* ── 右侧登录区域 ── */
+        .login-side {
+            flex: 0 0 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 32px 20px 20px;
+            position: relative;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .login-inner {
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .login-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+        .login-logo img { width: 40px; height: 40px; filter: drop-shadow(0 0 10px rgba(0,255,136,0.5)); }
+        .login-logo h2 {
+            font-size: 1.05rem;
+            background: linear-gradient(135deg, #00ff88, #00cc70);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
 
         .card {
             background: var(--bg-card);
             border: 1px solid var(--bg-border);
             border-radius: 16px;
-            padding: 36px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            padding: 30px 28px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,255,136,0.06);
+            backdrop-filter: blur(16px);
         }
+
         .tab-bar {
             display: flex;
             background: rgba(255,255,255,0.05);
             border-radius: 8px;
-            padding: 4px;
-            margin-bottom: 28px;
+            padding: 3px;
+            margin-bottom: 24px;
         }
         .tab-btn {
-            flex: 1; padding: 8px 0;
+            flex: 1; padding: 7px 0;
             background: none; border: none;
             color: var(--text-dim);
-            font-size: 0.95rem; cursor: pointer;
+            font-size: 0.92rem; cursor: pointer;
             border-radius: 6px;
             transition: all 0.2s;
         }
@@ -117,252 +232,295 @@
             color: #0a0f1e;
             font-weight: 600;
         }
-        .form-group { margin-bottom: 18px; }
+
+        .form-group { margin-bottom: 16px; }
         .form-group label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text-dim);
-            margin-bottom: 8px;
+            margin-bottom: 7px;
         }
-        .input-wrap {
-            position: relative;
-        }
+        .input-wrap { position: relative; }
         .input-wrap i {
-            position: absolute; left: 14px; top: 50%;
+            position: absolute; left: 13px; top: 50%;
             transform: translateY(-50%);
-            color: var(--text-dim); font-size: 0.9rem;
+            color: var(--text-dim); font-size: 0.87rem;
         }
         .form-group input {
             width: 100%;
             background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.10);
             border-radius: 8px;
-            padding: 12px 14px 12px 40px;
+            padding: 11px 13px 11px 38px;
             color: var(--text-primary);
-            font-size: 0.95rem;
+            font-size: 0.93rem;
             outline: none;
             transition: border-color 0.2s;
         }
         .form-group input:focus { border-color: var(--primary); }
-        .form-group input::placeholder { color: rgba(255,255,255,0.25); }
+        .form-group input::placeholder { color: rgba(255,255,255,0.22); }
+        .form-group input.valid { border-color: var(--primary) !important; }
+        .form-group input.invalid { border-color: #ff4c4c !important; }
+
+        .field-hint {
+            font-size: 0.76rem;
+            margin-top: 4px;
+            min-height: 16px;
+            transition: color 0.2s;
+        }
+        .field-hint.ok  { color: var(--primary); }
+        .field-hint.err { color: #ff4c4c; }
+
+        .pwd-strength-bar {
+            height: 3px; border-radius: 2px;
+            margin-top: 5px;
+            background: rgba(255,255,255,0.07);
+            overflow: hidden;
+        }
+        .pwd-strength-fill {
+            height: 100%; border-radius: 2px;
+            width: 0%; transition: width 0.3s, background 0.3s;
+        }
 
         .form-options {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 24px; font-size: 0.85rem;
+            margin-bottom: 20px; font-size: 0.82rem;
         }
         .form-options label { display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-dim); }
         .form-options a { color: var(--primary); text-decoration: none; }
         .form-options a:hover { text-decoration: underline; }
 
         .btn-login {
-            width: 100%;
-            padding: 13px;
+            width: 100%; padding: 12px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #0a0f1e;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
+            color: #0a0f1e; border: none; border-radius: 8px;
+            font-size: 0.97rem; font-weight: 700; cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,255,136,0.3);
+            box-shadow: 0 8px 24px rgba(0,255,136,0.35);
         }
         .btn-login:active { transform: translateY(0); }
 
         .divider {
-            display: flex; align-items: center; gap: 12px;
-            margin: 20px 0; color: var(--text-dim); font-size: 0.85rem;
+            display: flex; align-items: center; gap: 10px;
+            margin: 16px 0; color: var(--text-dim); font-size: 0.82rem;
         }
         .divider::before, .divider::after {
-            content: ''; flex: 1;
-            height: 1px; background: rgba(255,255,255,0.1);
+            content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
         }
+
         .btn-demo {
-            width: 100%;
-            padding: 12px;
-            background: rgba(0,212,255,0.1);
-            border: 1px solid rgba(0,212,255,0.3);
-            border-radius: 8px;
-            color: var(--accent);
-            font-size: 0.95rem;
-            cursor: pointer;
+            width: 100%; padding: 11px;
+            background: rgba(0,212,255,0.08);
+            border: 1px solid rgba(0,212,255,0.28);
+            border-radius: 8px; color: var(--accent);
+            font-size: 0.92rem; cursor: pointer;
             transition: all 0.2s;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .btn-demo:hover { background: rgba(0,212,255,0.2); }
+        .btn-demo:hover { background: rgba(0,212,255,0.16); }
 
         .alert {
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            margin-bottom: 16px;
-            display: none;
+            padding: 9px 13px; border-radius: 8px;
+            font-size: 0.82rem; margin-bottom: 14px; display: none;
         }
         .alert.error { background: rgba(255,76,76,0.1); border: 1px solid rgba(255,76,76,0.3); color: #ff4c4c; }
         .alert.success { background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); color: var(--primary); }
 
-        /* 注册表单 */
         #register-form { display: none; }
 
-        /* 输入框验证状态 */
-        .form-group input.valid {
-            border-color: var(--primary) !important;
+        /* 响应式 */
+        @media (max-width: 800px) {
+            .hero-side { display: none; }
+            .login-side { flex: 1; padding: 20px; }
         }
-        .form-group input.invalid {
-            border-color: #ff4c4c !important;
-        }
-        .field-hint {
-            font-size: 0.78rem;
-            margin-top: 5px;
-            min-height: 18px;
-            transition: color 0.2s;
-        }
-        .field-hint.ok  { color: var(--primary); }
-        .field-hint.err { color: #ff4c4c; }
-
-        /* 密码强度条 */
-        .pwd-strength-bar {
-            height: 4px;
-            border-radius: 2px;
-            margin-top: 6px;
-            background: rgba(255,255,255,0.08);
-            overflow: hidden;
-        }
-        .pwd-strength-fill {
-            height: 100%;
-            border-radius: 2px;
-            width: 0%;
-            transition: width 0.3s, background 0.3s;
-        }
-
-        .features {
-            margin-top: 24px;
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 12px; text-align: center;
-        }
-        .feature-item { font-size: 0.78rem; color: var(--text-dim); }
-        .feature-item i { display: block; font-size: 1.3rem; color: var(--primary); margin-bottom: 5px; }
     </style>
 </head>
 <body>
-    <div class="bg-grid"></div>
-    <div class="bg-glow glow-1"></div>
-    <div class="bg-glow glow-2"></div>
 
-    <div class="login-wrapper">
-        <div class="brand">
-            <img src="logo-football.svg" alt="足球视频智能分析系统">
-            <h1>足球视频智能分析系统</h1>
-            <p>AI驱动 · 智能识别 · 精准分析</p>
-        </div>
+    <!-- ══ 主体 ════════════════════════════════════════════════ -->
+    <div class="page-body">
 
-        <div class="card">
-            <div class="tab-bar">
-                <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">登录</button>
-                <button class="tab-btn" id="tab-register" onclick="switchTab('register')">注册</button>
-            </div>
+        <!-- 左侧英雄区域 -->
+        <div class="hero-side">
+            <div class="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-glow hg1"></div>
+            <div class="hero-glow hg2"></div>
+            <div class="hero-fade"></div>
 
-            <div id="alert-box" class="alert"></div>
+            <div class="hero-content">
+                <div class="hero-label">
+                    <span></span>
+                    AI 驱动 · 实时分析
+                </div>
 
-            <!-- 登录表单 -->
-            <form id="login-form" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label>用户名 / 邮箱</label>
-                    <div class="input-wrap">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="login-username" placeholder="请输入用户名或邮箱" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>密码</label>
-                    <div class="input-wrap">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="login-password" placeholder="请输入密码" required>
-                    </div>
-                </div>
-                <div class="form-options">
-                    <label>
-                        <input type="checkbox" id="remember-me">
-                        记住我
-                    </label>
-                    <a href="#">忘记密码？</a>
-                </div>
-                <button type="submit" class="btn-login">
-                    <i class="fas fa-sign-in-alt"></i> 登录
-                </button>
-            </form>
+                <h1 class="hero-title">
+                    足球视频<br>
+                    <em>智能分析系统</em>
+                </h1>
 
-            <!-- 注册表单 -->
-            <form id="register-form" onsubmit="handleRegister(event)">
-                <div class="form-group">
-                    <label>用户名</label>
-                    <div class="input-wrap">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="reg-username" placeholder="请输入用户名（4-20字符）" required
-                               minlength="4" maxlength="20" oninput="validateUsername(this)">
-                    </div>
-                    <div class="field-hint" id="hint-username"></div>
-                </div>
-                <div class="form-group">
-                    <label>邮箱</label>
-                    <div class="input-wrap">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" id="reg-email" placeholder="请输入邮箱地址" required
-                               oninput="validateEmail(this)">
-                    </div>
-                    <div class="field-hint" id="hint-email"></div>
-                </div>
-                <div class="form-group">
-                    <label>密码</label>
-                    <div class="input-wrap">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="reg-password" placeholder="请输入密码（至少8位）" required
-                               minlength="8" oninput="validatePassword(this)">
-                    </div>
-                    <div class="pwd-strength-bar">
-                        <div class="pwd-strength-fill" id="pwd-strength-fill"></div>
-                    </div>
-                    <div class="field-hint" id="hint-password"></div>
-                </div>
-                <div class="form-group">
-                    <label>确认密码</label>
-                    <div class="input-wrap">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="reg-confirm" placeholder="请再次输入密码" required
-                               oninput="validateConfirm(this)">
-                    </div>
-                    <div class="field-hint" id="hint-confirm"></div>
-                </div>
-                <button type="submit" class="btn-login" id="reg-submit-btn">
-                    <i class="fas fa-user-plus"></i> 立即注册
-                </button>
-            </form>
+                <p class="hero-sub">
+                    基于深度学习的足球比赛视频分析平台，<br>
+                    YOLOv8 + 自适应 DeepSORT 实现多目标追踪，<br>
+                    多模态融合精彩事件检测与视频生成。
+                </p>
 
-            <div class="divider">或</div>
-            <button class="btn-demo" onclick="guestLogin()">
-                <i class="fas fa-flask"></i> 游客体验（演示模式）
-            </button>
-
-            <div class="features">
-                <div class="feature-item">
-                    <i class="fas fa-brain"></i>AI智能分析
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-film"></i>精彩片段生成
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-chart-radar"></i>球员画像
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-num">YOLOv8</div>
+                        <div class="stat-label">目标检测引擎</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">DeepSORT</div>
+                        <div class="stat-label">自适应多目标追踪</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">多模态</div>
+                        <div class="stat-label">精彩事件融合检测</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- 右侧登录区域 -->
+        <div class="login-side" id="login-section">
+            <div class="login-inner">
+                <div class="login-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="40" height="40"
+                         style="flex-shrink:0;filter:drop-shadow(0 0 12px rgba(0,255,136,0.65))">
+                        <defs>
+                            <style>@keyframes lgnSpin { to { transform: rotate(360deg); } }</style>
+                            <clipPath id="lgn-clip"><circle cx="32" cy="32" r="19"/></clipPath>
+                            <filter id="lgn-glow">
+                                <feGaussianBlur stdDeviation="1.2" result="b"/>
+                                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                        </defs>
+                        <circle cx="32" cy="32" r="32" fill="#0a1520"/>
+                        <circle cx="32" cy="32" r="29.5" fill="none" stroke="#00ff88" stroke-width="1.8" opacity="0.9"/>
+                        <circle cx="32" cy="32" r="29.5" fill="none" stroke="#00ff88" stroke-width="0.8" stroke-dasharray="3 7" opacity="0.4"/>
+                        <g filter="url(#lgn-glow)">
+                            <circle cx="32"   cy="2.5"  r="2.6" fill="#00ff88"/>
+                            <circle cx="61.5" cy="32"   r="2.6" fill="#00ff88"/>
+                            <circle cx="32"   cy="61.5" r="2.6" fill="#00ff88"/>
+                            <circle cx="2.5"  cy="32"   r="2.6" fill="#00ff88"/>
+                        </g>
+                        <circle cx="32" cy="32" r="19" fill="#ececec"/>
+                        <g style="animation:lgnSpin 4s linear infinite;transform-origin:32px 32px;"
+                           clip-path="url(#lgn-clip)">
+                            <polygon points="33.5,27 29.75,33.5 22.25,33.5 18.5,27 22.25,20.5 29.75,20.5"
+                                     fill="#4a4a4a" stroke="#ececec" stroke-width="1.2"/>
+                            <polygon points="45.5,27 41.75,33.5 34.25,33.5 30.5,27 34.25,20.5 41.75,20.5"
+                                     fill="#3a3a3a" stroke="#ececec" stroke-width="1.2"/>
+                            <polygon points="39.5,38 35.75,44.5 28.25,44.5 24.5,38 28.25,31.5 35.75,31.5"
+                                     fill="#555" stroke="#ececec" stroke-width="1.2"/>
+                            <ellipse cx="27" cy="25" rx="5" ry="3" fill="white" opacity="0.25" transform="rotate(-20,27,25)"/>
+                        </g>
+                        <circle cx="32" cy="32" r="19" fill="none" stroke="#00ff88" stroke-width="0.8" opacity="0.55"/>
+                    </svg>
+                    <h2>足球视频智能分析系统</h2>
+                </div>
+
+                <div class="card">
+                    <div class="tab-bar">
+                        <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">登录</button>
+                        <button class="tab-btn" id="tab-register" onclick="switchTab('register')">注册</button>
+                    </div>
+
+                    <div id="alert-box" class="alert"></div>
+
+                    <!-- 登录表单 -->
+                    <form id="login-form" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label>用户名 / 邮箱</label>
+                            <div class="input-wrap">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="login-username" placeholder="请输入用户名或邮箱" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>密码</label>
+                            <div class="input-wrap">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="login-password" placeholder="请输入密码" required>
+                            </div>
+                        </div>
+                        <div class="form-options">
+                            <label>
+                                <input type="checkbox" id="remember-me">
+                                记住我
+                            </label>
+                            <a href="#">忘记密码？</a>
+                        </div>
+                        <button type="submit" class="btn-login">
+                            <i class="fas fa-sign-in-alt"></i> 登录
+                        </button>
+                    </form>
+
+                    <!-- 注册表单 -->
+                    <form id="register-form" onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <label>用户名</label>
+                            <div class="input-wrap">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="reg-username" placeholder="请输入用户名（4-20字符）" required
+                                       minlength="4" maxlength="20" oninput="validateUsername(this)">
+                            </div>
+                            <div class="field-hint" id="hint-username"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>邮箱</label>
+                            <div class="input-wrap">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="reg-email" placeholder="请输入邮箱地址" required
+                                       oninput="validateEmail(this)">
+                            </div>
+                            <div class="field-hint" id="hint-email"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>密码</label>
+                            <div class="input-wrap">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="reg-password" placeholder="请输入密码（至少8位）" required
+                                       minlength="8" oninput="validatePassword(this)">
+                            </div>
+                            <div class="pwd-strength-bar">
+                                <div class="pwd-strength-fill" id="pwd-strength-fill"></div>
+                            </div>
+                            <div class="field-hint" id="hint-password"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>确认密码</label>
+                            <div class="input-wrap">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="reg-confirm" placeholder="请再次输入密码" required
+                                       oninput="validateConfirm(this)">
+                            </div>
+                            <div class="field-hint" id="hint-confirm"></div>
+                        </div>
+                        <button type="submit" class="btn-login" id="reg-submit-btn">
+                            <i class="fas fa-user-plus"></i> 立即注册
+                        </button>
+                    </form>
+
+                    <div class="divider">或</div>
+                    <button class="btn-demo" onclick="guestLogin()">
+                        <i class="fas fa-flask"></i> 游客体验（演示模式）
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div><!-- /page-body -->
 
     <script>
+
         function switchTab(tab) {
-            document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('login-form').style.display    = tab === 'login'    ? 'block' : 'none';
             document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
             document.getElementById('tab-login').classList.toggle('active', tab === 'login');
             document.getElementById('tab-register').classList.toggle('active', tab === 'register');
@@ -394,7 +552,7 @@
         function validateUsername(input) {
             const v = input.value.trim();
             if (v.length === 0) { input.className = 'form-group input'; document.getElementById('hint-username').textContent = ''; return false; }
-            if (v.length < 4) { setFieldState(input, 'hint-username', false, '用户名至少4个字符'); return false; }
+            if (v.length < 4)  { setFieldState(input, 'hint-username', false, '用户名至少4个字符'); return false; }
             if (v.length > 20) { setFieldState(input, 'hint-username', false, '用户名最多20个字符'); return false; }
             if (!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(v)) { setFieldState(input, 'hint-username', false, '只能包含字母、数字、下划线或中文'); return false; }
             setFieldState(input, 'hint-username', true, '✓ 用户名格式正确'); return true;
@@ -415,7 +573,6 @@
                 document.getElementById('pwd-strength-fill').style.width = '0%';
                 return false;
             }
-            // 密码强度评分
             let score = 0;
             if (v.length >= 8)  score++;
             if (v.length >= 12) score++;
@@ -423,14 +580,12 @@
             if (/[0-9]/.test(v)) score++;
             if (/[^a-zA-Z0-9]/.test(v)) score++;
             const colors = ['#ff4c4c','#ff9f43','#ffce56','#00d4ff','#00ff88'];
-            const labels = ['非常弱', '弱', '一般', '强', '非常强'];
+            const labels = ['非常弱','弱','一般','强','非常强'];
             const fill = document.getElementById('pwd-strength-fill');
             fill.style.width = (score * 20) + '%';
             fill.style.background = colors[score - 1] || colors[0];
-
             if (v.length < 8) { setFieldState(input, 'hint-password', false, '密码至少8位'); return false; }
             setFieldState(input, 'hint-password', true, `密码强度：${labels[score - 1] || '一般'}`);
-            // 联动确认密码
             const conf = document.getElementById('reg-confirm');
             if (conf.value) validateConfirm(conf);
             return true;
@@ -450,16 +605,8 @@
             const username = document.getElementById('login-username').value.trim();
             const password = document.getElementById('login-password').value;
 
-            // 演示模式：固定账号直接通过
-            if ((username === 'admin' || username === 'demo') && password === '123456') {
-                showAlert('登录成功，正在跳转..', 'success');
-                localStorage.setItem('auth_user', JSON.stringify({ username, role: username === 'admin' ? 'admin' : 'user' }));
-                setTimeout(() => { window.location.href = 'index.html'; }, 800);
-                return;
-            }
-
             try {
-                const res = await fetch('http://127.0.0.1:9999/api/auth/login', {
+                const res = await fetch(`${window.location.origin}/api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
@@ -474,20 +621,19 @@
                     showAlert(err.detail || '用户名或密码错误');
                 }
             } catch {
-                showAlert('演示模式：请使用账号 admin / 123456 或点击"游客体验"');
+                showAlert('Unable to connect to the local service.');
             }
         }
 
         // ── 注册 ──────────────────────────────────────────────
         async function handleRegister(e) {
             e.preventDefault();
-            const unameEl    = document.getElementById('reg-username');
-            const emailEl    = document.getElementById('reg-email');
-            const pwdEl      = document.getElementById('reg-password');
-            const confirmEl  = document.getElementById('reg-confirm');
-            const submitBtn  = document.getElementById('reg-submit-btn');
+            const unameEl   = document.getElementById('reg-username');
+            const emailEl   = document.getElementById('reg-email');
+            const pwdEl     = document.getElementById('reg-password');
+            const confirmEl = document.getElementById('reg-confirm');
+            const submitBtn = document.getElementById('reg-submit-btn');
 
-            // 前端全量校验
             const ok = [
                 validateUsername(unameEl),
                 validateEmail(emailEl),
@@ -495,10 +641,7 @@
                 validateConfirm(confirmEl),
             ].every(Boolean);
 
-            if (!ok) {
-                showAlert('请修正表单中的错误后再提交');
-                return;
-            }
+            if (!ok) { showAlert('请修正表单中的错误后再提交'); return; }
 
             const username = unameEl.value.trim();
             const email    = emailEl.value.trim();
@@ -509,26 +652,20 @@
             hideAlert();
 
             try {
-                const res = await fetch('http://127.0.0.1:9999/api/auth/register', {
+                const res = await fetch(`${window.location.origin}/api/auth/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, email, password })
                 });
                 const data = await res.json().catch(() => ({}));
-
                 if (res.ok) {
                     showAlert('注册成功！即将跳转到登录页..', 'success');
-                    // 预填用户名
                     document.getElementById('login-username').value = username;
                     setTimeout(() => switchTab('login'), 1500);
                 } else if (res.status === 409) {
-                    // 唯一性冲突：精准标红对应字段
                     const msg = data.detail || '注册失败';
-                    if (msg.includes('用户名')) {
-                        setFieldState(unameEl, 'hint-username', false, msg);
-                    } else if (msg.includes('邮箱')) {
-                        setFieldState(emailEl, 'hint-email', false, msg);
-                    }
+                    if (msg.includes('用户名')) setFieldState(unameEl, 'hint-username', false, msg);
+                    else if (msg.includes('邮箱')) setFieldState(emailEl, 'hint-email', false, msg);
                     showAlert(msg);
                 } else {
                     showAlert(data.detail || '注册失败，请稍后重试');
@@ -546,15 +683,10 @@
             window.location.href = 'index.html';
         }
 
-        // 检查是否已登录
-        const user = localStorage.getItem('auth_user');
-        if (user) {
+        // 已登录则直接跳转
+        if (localStorage.getItem('auth_user')) {
             window.location.href = 'index.html';
         }
     </script>
-    <footer style="position:fixed;bottom:0;left:0;right:0;text-align:center;padding:10px 0;background:rgba(10,15,30,0.85);backdrop-filter:blur(4px);z-index:100;">
-        <p style="color:rgba(255,255,255,0.35);font-size:0.76rem;letter-spacing:0.5px;">2026年&nbsp;&nbsp;版本号V2.0.0</p>
-        <p style="color:rgba(255,255,255,0.35);font-size:0.76rem;letter-spacing:0.5px;">版权所有 &copy; 韩欣涛&nbsp;汤宇飞&nbsp;彭勃元</p>
-    </footer>
 </body>
 </html>

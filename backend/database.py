@@ -4,15 +4,15 @@ from sqlalchemy.orm import sessionmaker
 import datetime
 from datetime import timezone, timedelta
 import os
+from path_config import ensure_data_dirs, get_database_url
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 数据库连接配置
-# 路径固定为 backend/ 目录下，避免因启动目录不同产生多份 DB 文件
+# DB 文件放在用户目录下，避免 backend/ 目录只读权限问题
 # 生产环境可通过环境变量 DATABASE_URL 覆盖（例如 MySQL）
 # ──────────────────────────────────────────────────────────────────────────────
-_DB_DIR = os.path.dirname(os.path.abspath(__file__))  # backend/ 绝对路径
-_DB_FILE = os.path.join(_DB_DIR, "football_demo.db")
-DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{_DB_FILE}")
+ensure_data_dirs()
+DATABASE_URL = get_database_url()
 
 Base = declarative_base()
 
@@ -57,7 +57,7 @@ class AIChatSession(Base):
     """
     AI 对话会话历史表
 
-    将原来纯内存的 DeepSeekAgent.conversation_memory
+    将原来纯内存的 AIAgent.conversation_memory
     持久化到数据库，解决以下问题：
       1. 服务重启后对话历史丢失（幽灵内存数据）
       2. 无法追溯历史对话
@@ -86,7 +86,7 @@ class AIVideoCache(Base):
     """
     AI 视频语义知识库缓存表
 
-    将原来纯内存的 DeepSeekAgent.video_knowledge_base
+    将原来纯内存的 AIAgent.video_knowledge_base
     持久化到数据库，解决以下问题：
       1. 服务重启后知识库丢失，需要重新调用 /ai/analyze-video
       2. 无法校验缓存是否对应已删除视频（幽灵缓存）

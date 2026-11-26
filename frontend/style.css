@@ -33,13 +33,33 @@ body {
 
 .main-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+    gap: 1.5rem;
+    min-width: 0;
 }
 
-@media (max-width: 992px) {
+/* 横向滚动条：当屏幕宽度不足时允许横向滚动 */
+#panel-home {
+    overflow-x: auto;
+    overflow-y: visible;
+}
+#panel-home .main-grid {
+    min-width: 720px;
+}
+
+@media (max-width: 1200px) {
+    .main-grid {
+        grid-template-columns: minmax(260px, 1fr) minmax(0, 2fr);
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 900px) {
     .main-grid {
         grid-template-columns: 1fr;
+    }
+    #panel-home .main-grid {
+        min-width: unset;
     }
 }
 
@@ -153,4 +173,95 @@ button:disabled {
 #analysis-chart {
     margin-top: 2rem;
     max-height: 250px;
+}
+
+/* ===== 精彩视频界面专用样式 ===== */
+
+/* 事件类型标签 */
+.hl-event-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    background: color-mix(in srgb, var(--tc, #ff6384) 15%, transparent);
+    border: 1px solid color-mix(in srgb, var(--tc, #ff6384) 40%, transparent);
+    color: var(--tc, #ff6384);
+    white-space: nowrap;
+}
+
+/* 时间轴图例项 */
+.hl-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.45);
+}
+.hl-legend-item i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--lc, #ff6384);
+    flex-shrink: 0;
+}
+
+/* 导出配置字段组 */
+.hl-export-field {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+.hl-export-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: default;
+}
+.hl-export-label i { font-size: 0.75rem; color: #00d4ff; }
+
+/* 单选按钮胶囊 */
+.hl-radio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.5);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+}
+.hl-radio-btn:has(input:checked) {
+    background: rgba(0,212,255,0.14);
+    border-color: rgba(0,212,255,0.45);
+    color: #00d4ff;
+}
+.hl-radio-btn input[type="radio"] {
+    display: none;
+}
+
+/* 双栏预览区响应式 */
+.hl-preview-grid {
+    grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 900px) {
+    .hl-preview-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 片段卡片悬停 */
+.hl-video-card:hover {
+    border-color: rgba(0,212,255,0.32) !important;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(0,212,255,0.1) !important;
+    transform: translateY(-2px);
 }

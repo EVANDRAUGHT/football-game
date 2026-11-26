@@ -5,12 +5,12 @@
       <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
     </linearGradient>
-    
+
     <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#00cc70;stop-opacity:1" />
     </linearGradient>
-    
+
     <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#b0b0b0;stop-opacity:1" />
@@ -61,44 +61,44 @@
   <!-- 足球主体 - 五边形图案 -->
   <g filter="url(#shadow)">
     <!-- 中心五边形 -->
-    <polygon points="100,50 120,70 110,95 90,95 80,70" 
-             fill="url(#greenGradient)" 
-             stroke="#00ff88" 
+    <polygon points="100,50 120,70 110,95 90,95 80,70"
+             fill="url(#greenGradient)"
+             stroke="#00ff88"
              stroke-width="2"
              filter="url(#glow)"/>
-    
+
     <!-- 周围五边形 - 上 -->
-    <polygon points="100,50 85,45 90,30 110,30 115,45" 
-             fill="url(#blueGradient)" 
-             stroke="#00d4ff" 
+    <polygon points="100,50 85,45 90,30 110,30 115,45"
+             fill="url(#blueGradient)"
+             stroke="#00d4ff"
              stroke-width="1.5"
              opacity="0.8"/>
-    
+
     <!-- 周围五边形 - 右上 -->
-    <polygon points="120,70 130,65 140,75 135,90 120,85" 
-             fill="url(#blueGradient)" 
-             stroke="#00d4ff" 
+    <polygon points="120,70 130,65 140,75 135,90 120,85"
+             fill="url(#blueGradient)"
+             stroke="#00d4ff"
              stroke-width="1.5"
              opacity="0.8"/>
-    
+
     <!-- 周围五边形 - 右下 -->
-    <polygon points="110,95 120,105 115,120 100,125 95,110" 
-             fill="url(#blueGradient)" 
-             stroke="#00d4ff" 
+    <polygon points="110,95 120,105 115,120 100,125 95,110"
+             fill="url(#blueGradient)"
+             stroke="#00d4ff"
              stroke-width="1.5"
              opacity="0.8"/>
-    
+
     <!-- 周围五边形 - 左下 -->
-    <polygon points="90,95 95,110 85,120 70,115 75,100" 
-             fill="url(#blueGradient)" 
-             stroke="#00d4ff" 
+    <polygon points="90,95 95,110 85,120 70,115 75,100"
+             fill="url(#blueGradient)"
+             stroke="#00d4ff"
              stroke-width="1.5"
              opacity="0.8"/>
-    
+
     <!-- 周围五边形 - 左上 -->
-    <polygon points="80,70 70,75 60,65 65,50 80,55" 
-             fill="url(#blueGradient)" 
-             stroke="#00d4ff" 
+    <polygon points="80,70 70,75 60,65 65,50 80,55"
+             fill="url(#blueGradient)"
+             stroke="#00d4ff"
              stroke-width="1.5"
              opacity="0.8"/>
   </g>

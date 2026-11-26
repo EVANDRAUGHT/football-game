@@ -6,13 +6,13 @@
       <stop offset="50%" style="stop-color:#0099ff;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
     </linearGradient>
-    
+
     <!-- 霓虹青色渐变 -->
     <linearGradient id="neonCyan" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#00ccff;stop-opacity:1" />
     </linearGradient>
-    
+
     <!-- 银灰渐变 -->
     <linearGradient id="silverGray" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#e8e8e8;stop-opacity:1" />
@@ -58,10 +58,10 @@
 
   <!-- 外层科技环 - 六边形轨道 -->
   <g opacity="0.7">
-    <polygon points="100,20 145,40 145,80 100,100 55,80 55,40" 
-             fill="none" 
-             stroke="url(#techBlue)" 
-             stroke-width="2" 
+    <polygon points="100,20 145,40 145,80 100,100 55,80 55,40"
+             fill="none"
+             stroke="url(#techBlue)"
+             stroke-width="2"
              stroke-dasharray="8 4"
              filter="url(#neonGlow)">
       <animateTransform
@@ -77,10 +77,10 @@
 
   <!-- 中层能量环 -->
   <g opacity="0.5">
-    <circle cx="100" cy="100" r="70" 
-            fill="none" 
-            stroke="url(#neonCyan)" 
-            stroke-width="1.5" 
+    <circle cx="100" cy="100" r="70"
+            fill="none"
+            stroke="url(#neonCyan)"
+            stroke-width="1.5"
             stroke-dasharray="5 3">
       <animateTransform
         attributeName="transform"
@@ -175,11 +175,11 @@
   </g>
 
   <!-- 底部文字标识 -->
-  <text x="100" y="175" 
-        font-family="'Arial', 'Microsoft YaHei', sans-serif" 
-        font-size="14" 
-        font-weight="bold" 
-        fill="url(#techBlue)" 
+  <text x="100" y="175"
+        font-family="'Arial', 'Microsoft YaHei', sans-serif"
+        font-size="14"
+        font-weight="bold"
+        fill="url(#techBlue)"
         text-anchor="middle"
         filter="url(#neonGlow)">
     LINK·AI
